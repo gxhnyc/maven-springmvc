@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--    namespace对应Mapper接口名                -->
+  <mapper namespace="springmvc.test.mapper.OperatorMapper">
+  		<!-- 	    id对应Mapper方法名 -->
+  		<select id="findAll" resultType="Operator">
+  			select O_ID id,USERNAME, PASSWORD, ROLE, DISABLED from OPERATORS
+  		</select>
+  		<select id="findOne" resultType="Operator">
+  			select O_ID id,USERNAME, PASSWORD, ROLE, DISABLED from OPERATORS
+  				where O_ID=#{id}
+  		</select>
+  		<!-- 	useGeneratedKeys告诉Mybatis获取自动生成的主键set到pojo上 -->
+		<!-- 	keyColumn指定主键列名，keyProperty指定主键对应的pojo属性名  -->
+  		<insert id="createOne" useGeneratedKeys="true" keyColumn="o_id" keyProperty="id">
+  			insert into operators(o_id,username,password,role)
+  				values(operators_seq.nextval,#{username},#{password}，#{role})
+  		</insert>
+  		
+  		<delete id="deleteOne">
+  			delete from operators where o_id=#{id}
+  		</delete>
+  		
+  		<update id="updateOne">
+  			update operators set username=#{username},role=#{role},disabled=#{disabled} 
+  				where o_id=#{id}
+  		</update>
+  		
+  		<!-- findByRoleAndDisabled(String role, Boolean disabled) -->
+  		<select id="findByRoleAndDisabled" resultType="Operator">
+  			select * from operators where role=#{role} and disabled=#{disabled}
+  		</select>
+  		
+  		<select id="count" resultType="int">
+  			select distinct count(*) from operators
+  		</select>
+  		<select id="findAllRoles" resultType="String">
+  			select distinct role from operators where role ！= 'AV女优'
+  		</select>
+  		<!--  
+  		<select id="findByUsernameLike" resultType="operator_crud.Operator">
+  			select O_ID id,USERNAME, PASSWORD, ROLE, DISABLED from OPERATORS where username like #{username}  		
+  		</select>
+  		-->
+  		<!-- 使用bind标签时，需要在mapper里@Param value属性调用时，直接使用username,无需#{} -->
+  		<select id="findByUsernameLike" resultType="Operator">
+  			<bind name="usernamepattern" value="username+'%'"/>
+  			select O_ID id,USERNAME, PASSWORD, ROLE, DISABLED from OPERATORS where username like #{usernamepattern}  		
+  		</select>
+  		
+  		<delete id="batchDelete">
+  		
+  			delete from operators where o_id in
+  				<foreach collection="list1" item="id" open="(" separator="," close=")">
+  					#{id}
+  				</foreach>
+  		</delete>
+  		
+  		<update id="batchDisable">
+  			update operators set disabled=#{disabled} where o_id in
+  			<foreach collection="list2" item="id" open="(" separator="," close=")">
+  					#{id}
+  			</foreach>  		
+  		</update>
+  		
+  		<select id="search" resultType="Operator">
+  			select O_ID,USERNAME, PASSWORD, ROLE role, DISABLED disabled from OPERATORS
+  			
+  			<where>  				
+  				<if test="username != null">
+  					<bind name="namepattern" value="'%'+username +'%'"/>
+  					username like #{namepattern}
+  				</if>
+  				<if test="role != null">
+  					<bind name="rolepattern" value="'%'+role+'%'"/>
+  					and role like #{rolepattern}
+  				</if>
+  				<if test="disabled != null">
+  					and disabled = #{disabled}
+  				</if>  			
+  			</where>
+  			
+  		
+  		</select>
+  		
+  		
+  		
+  		
+  		
+  		
+  		
+  		
+  		
+  		
+  		
+  		
+  		
+  		
+  		
+  	
+  </mapper>

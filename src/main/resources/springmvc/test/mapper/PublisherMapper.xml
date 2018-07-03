@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--    namespace对应Mapper接口名                -->
+  <mapper namespace="springmvc.test.mapper.PublisherMapper">
+  		<select id="findOne" resultMap="publisherDetail">
+  			select p.publisher_id,p.publisher_name,
+	             b.book_id,b.book_name,
+	             a.author_id,a.author_name
+	          from publisher p 
+	             left join books b on p.publisher_id=b.publisher_id
+	             left join bookauthor ba on ba.book_id=b.book_id
+	             left join author a on ba.auther_id=a.author_id
+	          where p.publisher_id=#{publisher_id} 
+  		</select>
+  		<!-- 查询所有出版社信息  -->
+  		
+  		<select id="listAll" resultMap="publisherDetail">
+  			select p.publisher_id,p.publisher_name,p.publisher_brief,
+	             b.book_id,b.book_name,
+	             a.author_id,a.author_name
+	          from publisher p 
+	             left join books b on p.publisher_id=b.publisher_id
+	             left join bookauthor ba on ba.book_id=b.book_id
+	             left join author a on ba.auther_id=a.author_id
+	          
+  		</select>
+  		<!-- 	useGeneratedKeys告诉Mybatis获取自动生成的主键set到pojo上 -->
+		<!-- 	keyColumn指定主键列名，keyProperty指定主键对应的pojo属性名  -->
+  		<insert id="create" useGeneratedKeys="true" keyColumn="publisher_id" keyProperty="publisher_id">
+  			insert into publisher values(#{publisher_id},#{publisher_name},#{publisher_brief})
+  		</insert>
+  		
+  		<update id="update">
+  			update publisher
+  				set 
+  			publisher_name=#{publisher_name},publisher_brief=#{publisher_brief}
+  				where publisher_id=#{publisher_id}
+  		</update>
+  		<delete id="delete">
+  			delete from publisher where publisher_id=#{publisher_id}
+  		</delete>
+  		
+  		
+  		<resultMap type="Publisher" id="publisherDetail">
+  		<!-- 	注意：id或者result元素的property指定的属性应该属于父元素的ofType、type、javaType指定的pojo类 -->
+  		<!-- 其中,column对应数据库表中的字段或者别名,property对应pojo类中的字段名 -->
+  		<!-- <id/>标签对应数据库表中的主键列,<result/>标签对应数据库表中的非主键列 -->
+  			<id column="publisher_id" property="publisher_id"/>
+  			<result column="publisher_name" property="publisher_name"/>
+  			<result column="publisher_brief" property="publisher_brief"/>  			
+				<!-- 一对多关系 -->
+  			<collection property="books" ofType="Books">
+  				<id column="book_id" property="book_id"/>
+				<result column="book_name" property="book_name"/>
+				<collection property="author" ofType="Author">
+					<id column="author_id" property="author_id"/>
+					<result column="author_name" property="author_name"/>
+				</collection>	
+  			</collection>  						
+  		</resultMap>
+  </mapper>

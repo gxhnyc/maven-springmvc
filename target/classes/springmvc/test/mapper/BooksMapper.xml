@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace对应Mapper接口名 -->
+<mapper namespace="springmvc.test.mapper.BooksMapper">
+	<select id="findOne" resultMap="BookDetails">
+		select  b.book_id, b.book_name,
+				a.author_name,
+				b.book_brief,
+				p.publisher_name
+		from books b 
+			inner join publisher p on b.publisher_id=p.publisher_id
+			left join bookauthor ba	on b.book_id=ba.book_id
+			inner join author a	on a.author_id=ba.auther_id
+		where b.book_id=#{book_id}
+
+	</select>
+	<select id="findAll" resultMap="BookDetails">
+		select  b.book_id, b.book_name,
+				a.author_name,
+				b.book_brief,
+				p.publisher_name
+		from books b 
+			inner join publisher p on b.publisher_id=p.publisher_id
+			left join bookauthor ba	on b.book_id=ba.book_id
+			inner join author a	on a.author_id=ba.auther_id
+	</select>
+	<resultMap type="Books" id="BookDetails">
+		<!-- 映射结果集时，主键列用id，非主键列用result -->
+		<id column="book_id" property="book_id" />
+		<result column="book_name" property="book_name" />
+		<result column="book_brief" property="book_brief" />
+		<!-- 多对一关系 -->
+		<association property="publisher" javaType="Publisher">
+			<id column="publisher_id" property="publisher_id" />
+			<result column="publisher_name" property="publisher_name" />
+			<result column="publisher_brief" property="publisher_brief" />
+		</association>
+		<!-- 一对多关系 -->
+		<collection property="author" ofType="Author">
+			<id column="author_id" property="author_id" />
+			<result column="author_name" property="author_name" />
+			<result column="author_gender" property="author_gender" />
+			<result column="author_brief" property="author_brief" />
+		</collection>
+	</resultMap>
+
+</mapper>

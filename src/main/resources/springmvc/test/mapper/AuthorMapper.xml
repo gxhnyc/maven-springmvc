@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--    namespace对应Mapper接口名                -->
+  <mapper namespace="springmvc.test.mapper.AuthorMapper">
+  		<!-- findBooksByAuthorName 通过作者姓名查找相关信息 -->
+  		<select id="findBooksByAuthorName" resultMap="authorDetail">
+  			  select a.author_id,a.author_name,a.author_gender,a.author_brief,
+              	   	 b.book_id,b.book_name,b.book_brief,
+              	   	 p.publisher_id,p.publisher_name
+	            from author a
+	            left join bookauthor ba on ba.auther_id=a.author_id
+	            left join books b on b.book_id=ba.book_id
+	            inner join publisher p on p.publisher_id=b.publisher_id
+		       where a.author_name=#{author_name} 
+  		</select>
+  		<!-- findInfoByID 通过ID查找相关信息 -->  		
+  		<select id="findInfoByID" resultMap="authorDetail">
+  			select a.author_id,a.author_name,a.author_gender,a.author_brief,
+              	   b.book_id,b.book_id,b.book_name,b.book_brief,
+              	   p.publisher_id,p.publisher_name
+	            from author a
+	            left join bookauthor ba on ba.auther_id=a.author_id
+	            left join books b on b.book_id=ba.book_id
+	            left join publisher p on p.publisher_id=b.publisher_id
+     		where a.author_id=#{author_id}
+  		</select> 
+  		
+  		<select id="findAllAuthors" resultMap="authorDetail">
+  		select author_id,author_name,author_gender,author_brief
+	            from author
+  		</select>
+  		<!-- findAllInfo 查找所有信息-->
+  		<select id="findAllInfo" resultMap="authorDetail">
+  			 select a.author_id,a.author_name,a.author_gender,a.author_brief,
+	              	b.book_id,b.book_name,b.book_brief,
+	              	p.publisher_id,p.publisher_name
+	            from author a
+	            left join bookauthor ba on ba.auther_id=a.author_id
+	            left join books b on b.book_id=ba.book_id
+	            inner join publisher p on p.publisher_id=b.publisher_id
+  		</select> 
+  		
+  		<insert id="add" useGeneratedKeys="true" keyColumn="author_id" keyProperty="author_id">
+  			insert into author values(author_seq.nextval,#{author_name},#{author_gender},#{author_brief})
+  		</insert>		
+  		<resultMap type="Author" id="authorDetail">
+  		<!-- 其中,column对应数据库表中的字段或者别名,property对应pojo类中的字段名 -->
+  		<!-- <id/>标签对应数据库表中的主键列,<result/>标签对应数据库表中的非主键列 -->
+  			<id column="author_id" property="author_id"/>
+  			<result column="author_name" property="author_name"/>
+  			<result column="author_gender" property="author_gender"/>
+  			<result column="author_brief" property="author_brief"/>
+  			<collection property="books" ofType="Books">
+  				<id column="book_id" property="book_id"/>
+				<result column="book_name" property="book_name"/>				
+				<result column="book_brief" property="book_brief"/>
+				<association property="publisher" javaType="Publisher">
+					<id column="publisher_id" property="publisher_id"/>
+					<result column="publisher_name" property="publisher_name"/>
+					<result column="publisher_brief" property="publisher_brief"/>
+				</association>
+			</collection>
+  		</resultMap>
+  		
+  		
+  </mapper>
