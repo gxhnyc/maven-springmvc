@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,8 +38,7 @@ public class AuthorController {
 		//调用AuthorService的findAll()方法获取相关信息
 		List<Author> authors=authorService.findAllAuthors();
 		// 把数据放到model（请求域）中以便jsp获取
-		model.addAttribute("authors",authors);
-		
+		model.addAttribute("authors", authors);
 		return "author-list";
 		
 	}
@@ -47,7 +47,7 @@ public class AuthorController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET,value="/authors/author-details/{id}")
+	@RequestMapping(method=RequestMethod.GET,value="/authors/{id}/author-details")
 	public String authorDetails(@PathVariable Long id,Model model) {
 		
 		System.out.println("AuthorCtroller.authorDetails()----------");
@@ -61,11 +61,31 @@ public class AuthorController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/authors/author-add")
-	public String authoradd(Model model) {
+	public String authorAdd(Model model) {
 		
 		System.out.println("Authoradd()--GET------------");
 		model.addAttribute("author",new Author());
-		return "author-add";
+		return "author-edit";
+		
+	}
+	@RequestMapping(method=RequestMethod.POST,value="/authors/author-add")
+	public String authorAdd(@ModelAttribute @Valid Author author,BindingResult bindingResult) {
+		
+		System.out.println("Authoradd()--POST------------");
+		if(bindingResult.hasErrors()) {
+			return "author-edit";
+		}
+		if(authorService.authorNameExist(author.getAuthor_name())) {
+			//手动添加校验码方法
+			bindingResult.rejectValue(
+					"author_name", //指定校验字段
+					"form.authorNameAdd.exist",//错误码，I18N（国际化）
+					"用户名已存在！"//如果错误码对应的错误信息没有匹配到，则默认使用此提示消息
+					);
+			return "author-edit";
+		}
+		authorService.add(author);
+		return "redirect:/authors/author-list";
 		
 	}
 	
@@ -82,18 +102,49 @@ public class AuthorController {
 		return "redirect:/authors/author-list";
 		
 	}*/
-	@RequestMapping(method=RequestMethod.POST,value="/authors/author-add")
+	/**
+	 * 编辑get请求，
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.GET,value="/authors/{id}/author-edit")
+	public String authorEdit(@PathVariable Long id,Model model) {
+		Author author=authorService.findInfoByID(id);
+		model.addAttribute("author", author);
+		
+		return "author-edit";
+		}
+	
+	
+	@RequestMapping(method=RequestMethod.POST,value="/authors/{id}/author-edit")
 	// @Valid告诉springmvc需要校验Author,BindingResult参数必须紧随@Valid参数；如果省略了bindingResult参数，springmvc将直接返回400（Bad request）
-	public String authoradd(@Valid Author author,BindingResult bindingResult,Model model	) {
+	public String authorUpdate(@ModelAttribute @Valid Author author,BindingResult bindingResult,
+			@PathVariable Long id) {
+		
 		/*把表单字段封装成表单bean（new Publisher, setName, setDescription）
 		注意：表单字段名要同pojo属性名，没有字段对应属性将是默认值，不识别的字段将被忽略*/
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("author", author);
-			return "author-add";
+			//model.addAttribute("author", author);
+			return "author-edit";
 		}
+		System.out.println("------authorEdit.POST------"+id);
 		 // 数据校验通过才能走service
-		authorService.add(author);
+		authorService.update(author);
 		 // 重定向(302) - redirect:目标路径，注意springmvc会自动加上“协议://主机:端口/项目名”
+		return "redirect:/authors/author-list";
+		
+	}
+	
+	
+	
+	/**
+	 * 根据id删除一条记录
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.GET,value="/authors/{id}/author-delete")
+	public String delete(@PathVariable Long id) {
+		authorService.delete(id);		
 		return "redirect:/authors/author-list";
 		
 	}

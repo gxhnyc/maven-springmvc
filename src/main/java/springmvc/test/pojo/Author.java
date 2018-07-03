@@ -15,7 +15,7 @@ public class Author {
 	@NotNull(message="必填")
 	private AuthorGender author_gender;
 	
-	@Size(max=1024,message="最多1024字")	
+	@Size(min=1,max=1024,message="最多1024字")	
 	private String author_brief;
 	
 	private List<Books> books;
@@ -34,9 +34,10 @@ public class Author {
 	public AuthorGender getAuthor_gender() {
 		return author_gender;
 	}
-	public void setAuthor_gender(String author_gender) {
-		this.author_gender = AuthorGender.valueOf(author_gender);
+	public void setAuthor_gender(AuthorGender author_gender) {
+		this.author_gender = author_gender;
 	}
+
 	public String getAuthor_brief() {
 		return author_brief;
 	}
@@ -59,7 +60,7 @@ public class Author {
 		return "Author {author_id=" + author_id + ", 作者：" + author_name + ", 性别：" + author_gender
 				+ ", 作者简介：" + author_brief + ", 编写书籍：" + list + "}";
 	}
-	
+		
 	
 	
 }

@@ -46,7 +46,19 @@
   		
   		<insert id="add" useGeneratedKeys="true" keyColumn="author_id" keyProperty="author_id">
   			insert into author values(author_seq.nextval,#{author_name},#{author_gender},#{author_brief})
-  		</insert>		
+  		</insert>
+  		<delete id="delete">
+  			delete from author where author_id=#{author_id}
+  		</delete>
+  		<update id="update">
+  			update author set author_name=#{author_name},author_gender=#{author_gender},author_brief=#{author_brief}
+  			where author_id=#{author_id}
+  		</update>
+  		
+  		<select id="authorNameExist" resultType="boolean">
+  			select count(*) from author where author_name=#{author_name}
+  		</select>
+  				
   		<resultMap type="Author" id="authorDetail">
   		<!-- 其中,column对应数据库表中的字段或者别名,property对应pojo类中的字段名 -->
   		<!-- <id/>标签对应数据库表中的主键列,<result/>标签对应数据库表中的非主键列 -->

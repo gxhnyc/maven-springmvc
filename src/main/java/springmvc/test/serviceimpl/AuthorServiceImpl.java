@@ -3,6 +3,8 @@ package springmvc.test.serviceimpl;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,24 @@ public class AuthorServiceImpl implements AuthorService {
 	public void add(Author au) {
 		// TODO Auto-generated method stub
 		authorMapper.add(au);
+	}
+
+	@Override
+	public void delete(Long id) {
+		authorMapper.delete(id);
+		
+	}
+
+	@Override
+	public void update(@Valid Author author) {
+		authorMapper.update(author);
+		
+	}
+
+	@Override
+	public boolean authorNameExist(String authorName) {
+		// TODO Auto-generated method stub
+		return authorMapper.authorNameExist(authorName);
 	}
 
 }

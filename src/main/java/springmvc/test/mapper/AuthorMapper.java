@@ -2,6 +2,8 @@ package springmvc.test.mapper;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import springmvc.test.pojo.Author;
 
 
@@ -23,4 +25,7 @@ public interface AuthorMapper {
 	 */
 	public List<Author> findAllAuthors();
 	public void add(Author au);
+	public void delete(Long id);
+	public void update(@Valid Author author);
+	public boolean authorNameExist(String authorName);
 }
