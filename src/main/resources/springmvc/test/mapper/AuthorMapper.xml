@@ -31,7 +31,8 @@
   		
   		<select id="findAllAuthors" resultMap="authorDetail">
   		select author_id,author_name,author_gender,author_brief
-	            from author
+	            from author 
+	            order by author.author_id desc
   		</select>
   		<!-- findAllInfo 查找所有信息-->
   		<select id="findAllInfo" resultMap="authorDetail">
@@ -41,7 +42,8 @@
 	            from author a
 	            left join bookauthor ba on ba.auther_id=a.author_id
 	            left join books b on b.book_id=ba.book_id
-	            inner join publisher p on p.publisher_id=b.publisher_id
+	            left join publisher p on p.publisher_id=b.publisher_id
+	            order by a.author_id desc
   		</select> 
   		
   		<insert id="add" useGeneratedKeys="true" keyColumn="author_id" keyProperty="author_id">
@@ -51,7 +53,8 @@
   			delete from author where author_id=#{author_id}
   		</delete>
   		<update id="update">
-  			update author set author_name=#{author_name},author_gender=#{author_gender},author_brief=#{author_brief}
+  			update author 
+  				set author_name= #{author_name},author_gender=#{author_gender},author_brief=#{author_brief} 
   			where author_id=#{author_id}
   		</update>
   		

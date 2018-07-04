@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import springmvc.test.exceptions.AuthorNameExistException;
 import springmvc.test.pojo.Author;
 import springmvc.test.service.AuthorService;
 
@@ -75,16 +76,21 @@ public class AuthorController {
 		if(bindingResult.hasErrors()) {
 			return "author-edit";
 		}
-		if(authorService.authorNameExist(author.getAuthor_name())) {
-			//手动添加校验码方法
-			bindingResult.rejectValue(
-					"author_name", //指定校验字段
-					"form.authorNameAdd.exist",//错误码，I18N（国际化）
-					"用户名已存在！"//如果错误码对应的错误信息没有匹配到，则默认使用此提示消息
-					);
-			return "author-edit";
+	// 牢记：控制层只处理参数收集、数据校验之类的，至于处理业务的细节、步骤应该放在service层
+		try {
+			authorService.add(author);
+		}catch(AuthorNameExistException ae) {
+			System.out.println(ae.getMessage());
+			
+				//手动添加校验码方法
+				bindingResult.rejectValue(
+						"author_name", //指定校验字段
+						"form.authorNameAdd.exist",//错误码，I18N（国际化）
+						"用户名已存在！"//如果错误码对应的错误信息没有匹配到，则默认使用此提示消息
+						);
+				return "author-edit";
+			
 		}
-		authorService.add(author);
 		return "redirect:/authors/author-list";
 		
 	}
@@ -113,30 +119,23 @@ public class AuthorController {
 		model.addAttribute("author", author);
 		
 		return "author-edit";
-		}
-	
-	
-	@RequestMapping(method=RequestMethod.POST,value="/authors/{id}/author-edit")
+		}	
+	@RequestMapping(method=RequestMethod.POST,value="/authors/{author_id}/author-edit")
 	// @Valid告诉springmvc需要校验Author,BindingResult参数必须紧随@Valid参数；如果省略了bindingResult参数，springmvc将直接返回400（Bad request）
-	public String authorUpdate(@ModelAttribute @Valid Author author,BindingResult bindingResult,
-			@PathVariable Long id) {
+	public String authorUpdate(@ModelAttribute @Valid Author author,BindingResult bindingResult) {
 		
 		/*把表单字段封装成表单bean（new Publisher, setName, setDescription）
 		注意：表单字段名要同pojo属性名，没有字段对应属性将是默认值，不识别的字段将被忽略*/
 		if(bindingResult.hasErrors()) {
-			//model.addAttribute("author", author);
 			return "author-edit";
 		}
-		System.out.println("------authorEdit.POST------"+id);
+		System.out.println("------authorEdit.POST------"+author.getAuthor_brief());
 		 // 数据校验通过才能走service
 		authorService.update(author);
 		 // 重定向(302) - redirect:目标路径，注意springmvc会自动加上“协议://主机:端口/项目名”
 		return "redirect:/authors/author-list";
 		
-	}
-	
-	
-	
+	}	
 	/**
 	 * 根据id删除一条记录
 	 * @param id

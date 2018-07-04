@@ -2,9 +2,8 @@ package springmvc.test.service;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import springmvc.test.pojo.Author;
+import springmvc.test.pojo.AuthorGender;
 
 public interface AuthorService {
 	/**
@@ -24,6 +23,6 @@ public interface AuthorService {
 	public List<Author> findAllAuthors();
 	public void add(Author au);
 	public void delete(Long id);
-	public void update(@Valid Author author);
-	public boolean authorNameExist(String string);
+	public void update(Author author);
+	
 }

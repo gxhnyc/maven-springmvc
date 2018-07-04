@@ -15,7 +15,7 @@ public class Author {
 	@NotNull(message="必填")
 	private AuthorGender author_gender;
 	
-	@Size(min=1,max=1024,message="最多1024字")	
+	@Size(min=1,max=1024)	
 	private String author_brief;
 	
 	private List<Books> books;
