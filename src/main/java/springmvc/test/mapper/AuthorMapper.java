@@ -27,4 +27,5 @@ public interface AuthorMapper {
 	public void delete(Long id);
 	public void update(Author author);
 	public boolean authorNameExist(String authorName);
+	public List<Author> findAllOptions();
 }

@@ -20,4 +20,6 @@ public interface PublisherService {
 
 	void delete(Long id);
 
+	List<Publisher> findAllOptions();
+
 }

@@ -15,7 +15,7 @@ public interface OperatorMapper {
 	public List<Operator> findAll();
 
 	// 2.查询单个Operator
-	public Operator findOne(long id);
+	public Operator findOne(Integer id);
 
 	// 3.创建一个Operator
 	public void createOne(Operator op);
@@ -49,6 +49,12 @@ public interface OperatorMapper {
 	public void batchDisable(@Param("list2")List<Integer> list2,@Param("disabled") String disabled);
 	//12.List<Operator> search(Operator operator)  动态多条件查询
     public List<Operator> search(Operator operator);
+    /**
+     * 创建operator与role的关联
+     */
+	public void addRole();
+
+	public Integer userNameExist(String username);
 	
 	
 }

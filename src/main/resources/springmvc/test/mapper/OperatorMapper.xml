@@ -7,45 +7,51 @@
   <!--    namespace对应Mapper接口名                -->
   <mapper namespace="springmvc.test.mapper.OperatorMapper">
   		<!-- 	    id对应Mapper方法名 -->
+  		<select id="userNameExist" resultType="Integer">
+  			select count(*) from operators where username=#{username}
+  		</select>
   		<select id="findAll" resultType="Operator">
-  			select O_ID id,USERNAME, PASSWORD, ROLE, DISABLED from OPERATORS
+  			select O_ID id,USERNAME, PASSWORD, role_id, DISABLED from OPERATORS order by id desc
   		</select>
-  		<select id="findOne" resultType="Operator">
-  			select O_ID id,USERNAME, PASSWORD, ROLE, DISABLED from OPERATORS
-  				where O_ID=#{id}
+  		<select id="findOne" resultMap="OperatorMap">
+  			<!-- select O_ID id,USERNAME, PASSWORD, role_id, DISABLED from OPERATORS
+  				where O_ID=#{id} -->
+  				
+  			select o.o_id id,o.username,o.password,o.role_id,
+  				   r.role_name,r.role_id
+  				from operators o
+  				   left join role r on o.role_id=r.role_id
+  				where o.o_id=#{id}
+  				
+  				
   		</select>
+  		<resultMap type="Operator" id="OperatorMap">
+  			<id column="o_id" property="id"/>
+  			<result column="username" property="username"/>
+  			<result column="password" property="password"/>
+  			<result column="disabled" property="disabled"/>
+  			<association property="role" javaType="Role">
+  				<id column="role_id" property="role_id"/>
+  				<result column="role_name" property="role_name"/>
+  				<result column="role_desc" property="role_desc"/>
+  				
+  			</association>
+  		
+  		</resultMap>
+  		
   		<!-- 	useGeneratedKeys告诉Mybatis获取自动生成的主键set到pojo上 -->
 		<!-- 	keyColumn指定主键列名，keyProperty指定主键对应的pojo属性名  -->
   		<insert id="createOne" useGeneratedKeys="true" keyColumn="o_id" keyProperty="id">
-  			insert into operators(o_id,username,password,role)
-  				values(operators_seq.nextval,#{username},#{password}，#{role})
+  			insert into operators(o_id,username,password,role_id)
+  				values(operators_seq.nextval,#{username},#{password}，#{role.role_id})
   		</insert>
+  		
   		
   		<delete id="deleteOne">
   			delete from operators where o_id=#{id}
   		</delete>
   		
-  		<update id="updateOne">
-  			update operators set username=#{username},role=#{role},disabled=#{disabled} 
-  				where o_id=#{id}
-  		</update>
   		
-  		<!-- findByRoleAndDisabled(String role, Boolean disabled) -->
-  		<select id="findByRoleAndDisabled" resultType="Operator">
-  			select * from operators where role=#{role} and disabled=#{disabled}
-  		</select>
-  		
-  		<select id="count" resultType="int">
-  			select distinct count(*) from operators
-  		</select>
-  		<select id="findAllRoles" resultType="String">
-  			select distinct role from operators where role ！= 'AV女优'
-  		</select>
-  		<!--  
-  		<select id="findByUsernameLike" resultType="operator_crud.Operator">
-  			select O_ID id,USERNAME, PASSWORD, ROLE, DISABLED from OPERATORS where username like #{username}  		
-  		</select>
-  		-->
   		<!-- 使用bind标签时，需要在mapper里@Param value属性调用时，直接使用username,无需#{} -->
   		<select id="findByUsernameLike" resultType="Operator">
   			<bind name="usernamepattern" value="username+'%'"/>

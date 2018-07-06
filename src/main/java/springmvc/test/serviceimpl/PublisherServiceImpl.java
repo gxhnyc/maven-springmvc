@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import springmvc.test.mapper.PublisherMapper;
 import springmvc.test.pojo.Publisher;
 import springmvc.test.service.PublisherService;
 
 @Service
+@Transactional//开启事务应用服务
 public class PublisherServiceImpl implements PublisherService {
 	private PublisherMapper publisherMapper;
 	
@@ -58,6 +60,14 @@ public class PublisherServiceImpl implements PublisherService {
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		publisherMapper.delete(id);
+	}
+
+
+
+	@Override
+	public List<Publisher> findAllOptions() {
+		// TODO Auto-generated method stub
+		return publisherMapper.findAllOptions();
 	}
 
 }

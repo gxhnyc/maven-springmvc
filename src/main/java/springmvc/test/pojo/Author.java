@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class Author {
-	private long author_id;
+	private Long author_id;
 	
 	@Size(min=1,max=512,message="名字必填,1-512字")
 	private String author_name;
@@ -19,12 +19,7 @@ public class Author {
 	private String author_brief;
 	
 	private List<Books> books;
-	public long getAuthor_id() {
-		return author_id;
-	}
-	public void setAuthor_id(long author_id) {
-		this.author_id = author_id;
-	}
+	
 	public String getAuthor_name() {
 		return author_name;
 	}
@@ -50,7 +45,7 @@ public class Author {
 	public void setBooks(List<Books> books) {
 		this.books = books;
 	}
-	@Override
+	/*@Override
 	public String toString() {
 		List<String> list=new ArrayList<String>();
 		for(Books b:books) {
@@ -60,7 +55,13 @@ public class Author {
 		return "Author {author_id=" + author_id + ", 作者：" + author_name + ", 性别：" + author_gender
 				+ ", 作者简介：" + author_brief + ", 编写书籍：" + list + "}";
 	}
-		
+		*/
+	public Long getAuthor_id() {
+		return author_id;
+	}
+	public void setAuthor_id(Long author_id) {
+		this.author_id = author_id;
+	}
 	
 	
 }

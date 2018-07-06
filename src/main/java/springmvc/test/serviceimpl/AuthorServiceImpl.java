@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import springmvc.test.exceptions.AuthorNameExistException;
 import springmvc.test.mapper.AuthorMapper;
@@ -15,6 +16,7 @@ import springmvc.test.pojo.AuthorGender;
 import springmvc.test.service.AuthorService;
 
 @Service
+@Transactional//开启事务应用服务
 public class AuthorServiceImpl implements AuthorService {
 	
 	private AuthorMapper authorMapper;	
@@ -55,6 +57,11 @@ public class AuthorServiceImpl implements AuthorService {
 		System.out.println("authorSerivceImpl----"+author.getAuthor_name()+"---"+author.getAuthor_brief()+"id:"+author.getAuthor_id());
 		authorMapper.update(author);
 		
+	}
+	@Override
+	public List<Author> findAllOptions() {
+		// TODO Auto-generated method stub
+		return authorMapper.findAllOptions();
 	}
 
 }

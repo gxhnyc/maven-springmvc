@@ -2,6 +2,8 @@ package springmvc.test.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import springmvc.test.pojo.Books;
 
 
@@ -36,6 +38,8 @@ public interface BooksMapper {
 	 * @param op
 	 */
 	public void updateOne(Books op);
+
+	public void addAuthor(@Param(value = "book_id") long book_id, @Param(value = "author_id") Long author_id);
 
 	
 	

@@ -11,7 +11,7 @@ public interface OperatorService {
 		public List<Operator> findAll();
 
 		// 2.查询单个Operator
-		public Operator findOne(long id);
+		public Operator findOne(Integer id);
 
 		// 3.创建一个Operator
 		public void createOne(Operator op);

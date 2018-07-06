@@ -24,5 +24,6 @@ public interface AuthorService {
 	public void add(Author au);
 	public void delete(Long id);
 	public void update(Author author);
+	public List<Author> findAllOptions();
 	
 }

@@ -5,12 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import springmvc.test.exceptions.UserNameExistException;
 import springmvc.test.mapper.OperatorMapper;
 import springmvc.test.pojo.Operator;
+import springmvc.test.pojo.Role;
 import springmvc.test.service.OperatorService;
 
 @Service
+@Transactional//开启事务应用服务
 public class OperatorServiceImpl implements OperatorService {
 	
 	private OperatorMapper operatorMapper;
@@ -27,26 +31,33 @@ public class OperatorServiceImpl implements OperatorService {
 	@Override
 	public List<Operator> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return operatorMapper.findAll();
 	}
 
 	@Override
-	public Operator findOne(long id) {
+	public Operator findOne(Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		return operatorMapper.findOne(id);
 	}
 
 	@Override
 	public void createOne(Operator op) {
+		if(operatorMapper.userNameExist(op.getUsername())>0) {
+			throw new UserNameExistException();
+		}
 		String encodepwd=passwordEncoder.encode(op.getPassword());
 		op.setPassword(encodepwd);
+		//创建operator ：o_id,username,password,role_id
 		operatorMapper.createOne(op);
+		
+			
+		
 
 	}
 
 	@Override
 	public void deleteOne(long id) {
-		// TODO Auto-generated method stub
+		operatorMapper.deleteOne(id);
 
 	}
 

@@ -10,10 +10,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -23,6 +26,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc //开户WebMvc基础设施支持
 @MapperScan("springmvc.test.mapper")
 @PropertySource("classpath:jdbc.properties")
+@EnableTransactionManagement//开启spring事务支持（这是一个组件）
 /**
  * springmvc配置类（dataSource,sqlsessionFactoryBean）
  * @author Administrator
@@ -59,6 +63,12 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 		return passwordEncoder;		
 	} 
 	
+	@Bean
+	public PlatformTransactionManager platformTransactionManager(DataSource dataSource) {
+		
+		return new DataSourceTransactionManager(dataSource);
+		
+	}
 	
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {

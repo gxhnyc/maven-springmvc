@@ -14,7 +14,7 @@
 		from books b 
 			inner join publisher p on b.publisher_id=p.publisher_id
 			left join bookauthor ba	on b.book_id=ba.book_id
-			inner join author a	on a.author_id=ba.auther_id
+			inner join author a	on a.author_id=ba.author_id
 		where b.book_id=#{book_id}
 
 	</select>
@@ -24,10 +24,17 @@
 				b.book_brief,
 				p.publisher_name
 		from books b 
-			inner join publisher p on b.publisher_id=p.publisher_id
+			left join publisher p on b.publisher_id=p.publisher_id
 			left join bookauthor ba	on b.book_id=ba.book_id
-			inner join author a	on a.author_id=ba.auther_id
+			left join author a	on a.author_id=ba.author_id
+		order by b.book_id desc
 	</select>
+	<insert id="createOne" useGeneratedKeys="true" keyColumn="book_id" keyProperty="book_id">
+		insert into books values(books_seq.nextval,#{book_name},#{book_brief},#{publisher.publisher_id})
+	</insert>
+	<insert id="addAuthor" >
+		insert into bookauthor values(#{book_id},#{author_id})
+	</insert>
 	<resultMap type="Books" id="BookDetails">
 		<!-- 映射结果集时，主键列用id，非主键列用result -->
 		<id column="book_id" property="book_id" />

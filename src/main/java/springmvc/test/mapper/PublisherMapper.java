@@ -17,4 +17,6 @@ public interface PublisherMapper {
 	void update(Publisher publisher);
 
 	void delete(Long id);
+
+	List<Publisher> findAllOptions();
 }

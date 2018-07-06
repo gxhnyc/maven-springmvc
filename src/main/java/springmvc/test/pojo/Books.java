@@ -2,13 +2,20 @@ package springmvc.test.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Books {
 	private long book_id;
+	@Size(min=2,max=512)
 	private String book_name;
+	@Size(max=1024)
 	private String book_brief;
+	
+	@NotNull//对一关系 
 	private Publisher publisher;
-	private List<Author> author;
+	@NotNull//对多关系---------------------------------------此处有问题
+	private List<Author> author=new ArrayList<Author>();
 	
 	public long getBook_id() {
 		return book_id;
@@ -40,23 +47,5 @@ public class Books {
 	public void setAuthor(List<Author> author) {
 		this.author = author;
 	}
-	/*@Override
-	public String toString() {
-		return "《"+book_name+"》";
-	}*/
-	
-	
-	
-	/*@Override
-	public String toString() {
-		List<String> list=new ArrayList<String>();
-		for(Author a:author) {
-			list.add(a.getAuthor_name());
-		}
-		return "Books [book_id:" + book_id + ", book_name=" + book_name + ", author=" + list +  ", book_brief=" + book_brief + ", publisher="
-				+ publisher.getPublisher_name()+ "]";
-	}
-	*/
-	
 	
 }

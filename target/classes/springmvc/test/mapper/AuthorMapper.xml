@@ -61,6 +61,10 @@
   		<select id="authorNameExist" resultType="boolean">
   			select count(*) from author where author_name=#{author_name}
   		</select>
+  		
+  		<select id="findAllOptions" resultType="Author">
+  			select author_id,author_name,author_brief from author
+  		</select>
   				
   		<resultMap type="Author" id="authorDetail">
   		<!-- 其中,column对应数据库表中的字段或者别名,property对应pojo类中的字段名 -->
