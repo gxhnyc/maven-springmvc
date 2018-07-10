@@ -57,12 +57,12 @@ public class OperatorController {
 	public String addOperator(@ModelAttribute @Valid OperatorForm operatorForm,BindingResult bindingResult,Model model) {
 		//System.out.println("operator:"+operatorForm.getUsername());
 		
-		if(operatorForm.getRole_id()==null) {
+		/*if(operatorForm.getRole_id()==null) {
 			//手动添加错误提示
 			 bindingResult.rejectValue("role_id", "required", "必填");
 			 prepareOptionsInAdd(model);
 			 return "operator-add";
-		}		
+		}		*/
 		if(bindingResult.hasErrors()) {
 			 prepareOptionsInAdd(model);
 			 return "operator-add";
@@ -136,6 +136,7 @@ public class OperatorController {
 		Limits limitsPlaceHolder=new Limits();
 		limitsPlaceHolder.setLimits_name("--请选择权限--");
 		limitsOptions.add(0, limitsPlaceHolder);
+		model.addAttribute("roleOptions",roleOptions);
 		model.addAttribute("limitsOptions", limitsOptions);		
 	}
 	

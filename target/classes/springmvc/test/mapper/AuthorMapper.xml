@@ -12,7 +12,7 @@
               	   	 b.book_id,b.book_name,b.book_brief,
               	   	 p.publisher_id,p.publisher_name
 	            from author a
-	            left join bookauthor ba on ba.auther_id=a.author_id
+	            left join bookauthor ba on ba.author_id=a.author_id
 	            left join books b on b.book_id=ba.book_id
 	            inner join publisher p on p.publisher_id=b.publisher_id
 		       where a.author_name=#{author_name} 
@@ -23,7 +23,7 @@
               	   b.book_id,b.book_id,b.book_name,b.book_brief,
               	   p.publisher_id,p.publisher_name
 	            from author a
-	            left join bookauthor ba on ba.auther_id=a.author_id
+	            left join bookauthor ba on ba.author_id=a.author_id
 	            left join books b on b.book_id=ba.book_id
 	            left join publisher p on p.publisher_id=b.publisher_id
      		where a.author_id=#{author_id}
@@ -40,7 +40,7 @@
 	              	b.book_id,b.book_name,b.book_brief,
 	              	p.publisher_id,p.publisher_name
 	            from author a
-	            left join bookauthor ba on ba.auther_id=a.author_id
+	            left join bookauthor ba on ba.author_id=a.author_id
 	            left join books b on b.book_id=ba.book_id
 	            left join publisher p on p.publisher_id=b.publisher_id
 	            order by a.author_id desc

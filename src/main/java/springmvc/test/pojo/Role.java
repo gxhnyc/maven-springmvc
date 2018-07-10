@@ -3,19 +3,23 @@ package springmvc.test.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import springmvc.test.form.RoleForm;
 
 
 
 public class Role {
+	
     private Long role_id;
-    @Size(min=1,max=32)
+   @Size(min=2,max=32)
     private String role_name;
-    @Size(max=512)
+   @Size(max=128)
     private String role_desc;
     //对多
-    @NotNull
+   
     private List<Limits> limits=new ArrayList<Limits>();
   
    
@@ -42,5 +46,22 @@ public class Role {
 	}
 	public void setLimits(List<Limits> limits) {
 		this.limits = limits;
+	}
+	/**
+	 * 由role转换成roleForm对象
+	 * @return
+	 */
+	public RoleForm toRoleForm() {
+
+		RoleForm roleForm=new RoleForm();
+		roleForm.setRole_id(role_id);
+		roleForm.setRole_name(role_name);
+		roleForm.setRole_desc(role_desc);
+		
+		for(Limits li:this.getLimits()) {
+			roleForm.getLimitsIds().add(li.getLimits_id());
+		}		
+		
+		return roleForm;
 	}
 }

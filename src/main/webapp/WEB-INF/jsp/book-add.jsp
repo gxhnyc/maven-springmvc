@@ -79,7 +79,7 @@
                    			  itemValue="publisher_id"
                    			  />
                    
-      			</form:select>
+      		</form:select>
 			<form:errors path="publisher_id" cssClass="add-error"></form:errors>
 		</div>
 		

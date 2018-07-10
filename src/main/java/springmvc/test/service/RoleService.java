@@ -12,4 +12,11 @@ public interface RoleService {
 	public List<Role> findAllOptions();
 
 	public Role findOne(Long id);
+
+	public void create(Role role);
+
+	public void deleteOne(Long id);
+
+	public Role findOneToEdit(Long id);
+	public void update(Role ro);
 }

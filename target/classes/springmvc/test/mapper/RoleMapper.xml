@@ -8,10 +8,56 @@
   <mapper namespace="springmvc.test.mapper.RoleMapper">
   		<!-- 	    id对应Mapper方法名 -->
   		<select id="findAllOptions" resultType="Role">
-  			select role_id,role_name  from role
+  			select role_id,role_name,role_desc  from role order by role_id asc
   		</select>
-  		<select id="findOne" resultType="Role">
-  			select role_id,role_name from role where role_id=#{id}
+  		
+  		
+  		<insert id="create" useGeneratedKeys="true" keyColumn="role_id" keyProperty="role_id">
+  			insert into role values(role_seq.nextval,#{role_name},#{role_desc}) 
+  			
+  		</insert>
+  		
+  		<insert id="addLimits">
+  			insert into rolelimits values(#{role_id},#{limits_id})
+  		</insert>
+  		
+  		<select id="roleNameExist" resultType="Integer">
+  			select count(*) from role where role_name=#{role_name}
   		</select>
+  		
+  		<delete id="deleteLimits" >
+  			delete from rolelimits where role_id=#{role_id}
+  		</delete>
+  		<delete id="deleteRole">
+  			delete from role where role_id=#{role_id}
+  		</delete>
+  		<select id="findOneToEdit" resultType="Role">
+  			select role_id,role_name,role_desc from role where role_id=#{role_id}
+  		</select>
+  		<update id="update" >
+  			update role set role_name=#{role_name},role_desc=#{role_desc} where role_id=#{role_id}
+  		</update>
+  		
+  		<select id="findOne" resultMap="roleMap">
+  			select  r.role_id,r.role_name,r.role_desc,
+			        l.limits_id,l.limits_name,l.limits_desc
+			from role r 
+			     left join rolelimits rl on r.role_id=rl.role_id
+			     left join limits l on rl.limits_id=l.limits_id
+			where r.role_id=#{role_id}
+  		</select>
+  		<resultMap type="Role" id="roleMap">
+  			<id column="role_id" property="role_id"/>
+  			<result column="role_name" property="role_name"/>
+  			<result column="role_desc" property="role_desc"/>
+  			<collection property="limits" ofType="Limits">
+  				<id column="limits_id" property="limits_id"/>
+  				<result column="limits_name" property="limits_name"/>
+  				<result column="limits_desc" property="limits_desc"/>
+  			</collection>
+  			
+  		</resultMap>
+  		
+  		
   	
   </mapper>

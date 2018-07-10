@@ -7,13 +7,13 @@
   <!--    namespace对应Mapper接口名  -->
   <mapper namespace="springmvc.test.mapper.LimitsMapper">
   		
-  		<select id="findAllOptions" resultMap="limitsDetails">
+  		<select id="findAllOptions" resultType="Limits">
   			select l.limits_id,l.limits_name,l.limits_desc 
        			from limits l
   		</select>
-  		<resultMap type="Limits" id="limitsDetails">
+  		<!-- <resultMap type="Limits" id="limitsDetails">
   			<id column="limits_id" property="limits_id"/>
   			<result column="limits_name" property="limits_name"/>
   			<result column="limits_desc" property="limits_desc"/>
-  		</resultMap>
+  		</resultMap> -->
   </mapper>
