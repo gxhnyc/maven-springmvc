@@ -6,17 +6,7 @@
 <html>
 <head>
 <title>Author-list</title>
-<style type="text/css">
-	body{
-		background:pink;
-	}
-	a{
-		text-decoration:none;
-	}
-	a:hover{
-		color:red;
-	}
-</style>
+<link href="${contextPath}/assets/css/add-error.css" rel="stylesheet">
 </head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <body>

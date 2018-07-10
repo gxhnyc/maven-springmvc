@@ -2,24 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath} }" ></c:set>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>添加角色</title>
-<style type="text/css">
-	body{
-		background:pink;
-	}
-	a{
-		text-decoration:none;
-	}
-	a:hover{
-		color:red;
-	}
-	.add-error{
-		color:red;
-	}
-</style>
+<link href="${contextPath}/assets/css/add-error.css" rel="stylesheet">
 </head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <body>
