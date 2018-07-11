@@ -25,6 +25,16 @@
   				
   				
   		</select>
+  		<select id="findOneByUsername" resultMap="OperatorMap">
+  			select o.o_id,o.username,o.password,o.disabled,
+                     r.role_id,r.role_name,r.role_desc,
+                     l.limits_id,l.limits_name,l.limits_desc
+           from operators o 
+           inner join role r on o.role_id=r.role_id
+           left join rolelimits rl on r.role_id=rl.role_id
+           left join limits l on rl.limits_id=l.limits_id
+           where o.username=#{username}
+  		</select>
   		<resultMap type="Operator" id="OperatorMap">
   			<id column="o_id" property="id"/>
   			<result column="username" property="username"/>
@@ -34,7 +44,11 @@
   				<id column="role_id" property="role_id"/>
   				<result column="role_name" property="role_name"/>
   				<result column="role_desc" property="role_desc"/>
-  				
+  				<collection property="limits" ofType="Limits">
+  					<id column="limits_id" property="limits_id"/>
+  					<result column="limits_name" property="limits_name"/>
+  					<result column="limits_desc" property="limits_desc"/>
+  				</collection>
   			</association>
   		
   		</resultMap>

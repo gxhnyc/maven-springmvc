@@ -13,7 +13,7 @@ public class Operator {
 	@Size(min=3,max=16)
 	private String password;//  -password: String
 
-	private String disabled;//  -disabled: Boolean
+	private Boolean disabled;//  -disabled: Boolean
 	
 	private Role role=new Role();//  -role: 
 	
@@ -39,11 +39,11 @@ public class Operator {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getDisabled() {
+	public Boolean getDisabled() {
 		return disabled;
 	}
 	public void setDisabled(String disabled) {
-		this.disabled = disabled;
+		this.disabled = Boolean.valueOf(disabled);
 	}
 	public Role getRole() {
 		return role;

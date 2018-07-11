@@ -55,6 +55,8 @@ public interface OperatorMapper {
 	public void addRole();
 
 	public Integer userNameExist(String username);
+
+	public Operator findOneByUsername(String username);
 	
 	
 }
