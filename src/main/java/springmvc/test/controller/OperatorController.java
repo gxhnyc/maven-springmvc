@@ -96,7 +96,7 @@ public class OperatorController {
 	}
 	
 	
-//-------------------------------------operator-list-start--------------------------------------
+//-------------------------------------operator-list--------------------------------------
 	/**
 	 * list只有get请求，没有post请求
 	 * @param model
@@ -108,6 +108,7 @@ public class OperatorController {
 		model.addAttribute("operators", operators);		
 		return "operator-list";		
 	}
+//-------------------------------------operator-details--------------------------------------
 	@RequestMapping(method=RequestMethod.GET,value="/operators/operator-details/{id}")
 	public String details(@PathVariable Integer id,Model model) {
 		Operator op=operatorService.findOne(id);

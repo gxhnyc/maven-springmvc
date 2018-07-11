@@ -25,6 +25,13 @@
 				
 			<li>#${operator.username} </li>
 			<li> 《${operator.role.role_name}》</li>
+			<li>
+				<ul>
+					<c:forEach items="${operator.role.limits}" var="limit">
+						<li>【${limit.limits_name }】</li>
+					</c:forEach>
+				</ul>
+			</li>
 				
 		
 	</ul>

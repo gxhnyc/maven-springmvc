@@ -1,16 +1,16 @@
 package springmvc.test.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
 @EnableWebSecurity //开启WebSecurity组件功能，获得了SpringSecurityFilterChain组件
 
-public class SecurityConfig {
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
+
+	
 	// 默认所有请求都需要登录，对于这个后台管理系统来说，可以不改
 	/**
 	 * 登录逻辑说明：
@@ -23,6 +23,35 @@ public class SecurityConfig {
 	 * 		将用户详情放入会话；重定向到触发登录的页面或者默认登录成功页（可配置）
 	 * }else 回到登录页面，显示错误消息（用户名或密码错误）
 	 */
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+		.authorizeRequests()//请求页面配置授权
+		.antMatchers("/login").permitAll()//login页面允许所有用户访问，包括匿名用户
+		.antMatchers("/**").authenticated()//其他页面仅限于用户登录后访问
+		.and()
+		.formLogin()//配置表单登录
+		.loginPage("/login")//指定登录页面的路径：显示表单（自己写） GET /login；提交表单（springsecurity自带） POST /login
+		.defaultSuccessUrl("/operators/operator-list");//指定默认登录成功页面（比如直接访问登录页面，而不是其他需要登录的页面触发的）
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/*@Bean

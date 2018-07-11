@@ -17,10 +17,13 @@
   			<!-- select O_ID id,USERNAME, PASSWORD, role_id, DISABLED from OPERATORS
   				where O_ID=#{id} -->
   				
-  			select o.o_id id,o.username,o.password,o.role_id,
-  				   r.role_name,r.role_id
-  				from operators o
-  				   left join role r on o.role_id=r.role_id
+  			select o.o_id,o.username,o.password,o.disabled,
+                     r.role_id,r.role_name,r.role_desc,
+                     l.limits_id,l.limits_name,l.limits_desc
+           from operators o 
+           inner join role r on o.role_id=r.role_id
+           left join rolelimits rl on r.role_id=rl.role_id
+           left join limits l on rl.limits_id=l.limits_id
   				where o.o_id=#{id}
   				
   				
