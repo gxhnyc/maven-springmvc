@@ -38,11 +38,12 @@ public class BooksController {
 	}
 	
 	/**
-	 * 访问：http://localhost:8080/maven-springmvc/books/book-list
+	 * 图书列表
+	 * 访问：http://localhost:8080/maven-springmvc/books/
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET,value="/books/book-list")
+	@RequestMapping(method=RequestMethod.GET,value="/books/")
 	public String list(Model model) {
 		
 		System.out.println("BookCtroller.list()----------");
@@ -54,7 +55,7 @@ public class BooksController {
 		return "book-list";
 		
 	}
-	@RequestMapping(method=RequestMethod.POST,value="/books/book-list")
+	@RequestMapping(method=RequestMethod.POST,value="/books/")
 	public String listall(Model model) {
 		
 		System.out.println("BookCtroller.list()----------");
@@ -67,10 +68,11 @@ public class BooksController {
 		
 	}
 	/**
-	 * 访问：http://localhost:8080/maven-springmvc/books/book-details/#{id}
+	 * 图书详情页
+	 * 访问：http://localhost:8080/maven-springmvc/books/{id}
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET,value="/books/book-details/{id}")
+	@RequestMapping(method=RequestMethod.GET,value="/books/{id}")
 	public String BookDetails(@PathVariable Long id,Model model) {
 		
 		System.out.println("BookCtroller.BookDetails()----------");
@@ -103,7 +105,7 @@ public class BooksController {
 		
 		bookService.createOne(bookForm.toBooks());
 		
-		return "redirect:/books/book-list";
+		return "redirect:/books/";
 		}
 	
 	

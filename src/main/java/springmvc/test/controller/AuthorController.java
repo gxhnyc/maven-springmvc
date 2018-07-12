@@ -28,11 +28,11 @@ public class AuthorController {
 		this.authorService = author;
 	}
 	/**
-	 * 访问http://localhost:8080/maven-springmvc/authors/author-list
+	 * 访问http://localhost:8080/maven-springmvc/authors/
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET,value="/authors/author-list")
+	@RequestMapping(method=RequestMethod.GET,value="/authors/")
 	public String list(Model model) {
 		
 		System.out.println("AuthorCtroller.list()----------");
@@ -44,11 +44,12 @@ public class AuthorController {
 		
 	}
 	/**
-	 * 访问http://localhost:8080/maven-springmvc/authors/author-details/id
+	 * 详情
+	 * 访问http://localhost:8080/maven-springmvc/authors/id
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET,value="/authors/{id}/author-details")
+	@RequestMapping(method=RequestMethod.GET,value="/authors/{id}")
 	public String authorDetails(@PathVariable Long id,Model model) {
 		
 		System.out.println("AuthorCtroller.authorDetails()----------");
@@ -91,7 +92,7 @@ public class AuthorController {
 				return "author-edit";
 			
 		}
-		return "redirect:/authors/author-list";
+		return "redirect:/authors/";
 		
 	}
 	
@@ -105,7 +106,7 @@ public class AuthorController {
 		au.setAuthor_brief(author_brief);
 		authorService.add(au);
 		
-		return "redirect:/authors/author-list";
+		return "redirect:/authors/";
 		
 	}*/
 	/**
@@ -144,7 +145,7 @@ public class AuthorController {
 	@RequestMapping(method=RequestMethod.GET,value="/authors/{id}/author-delete")
 	public String delete(@PathVariable Long id) {
 		authorService.delete(id);		
-		return "redirect:/authors/author-list";
+		return "redirect:/authors/";
 		
 	}
 	

@@ -3,45 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"></c:set>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title>publisher-edit</title>
-<style type="text/css">
-	body{
-		margin:0px 500px;
-		background:pink;
-	}
-	fieldset{
-	
-		width:450px;
-		height:500px;
-	}
-	legend{text-align:center;}
-	form{
-		text-align:left;
-	}
-	
-	a{
-		text-decoration:none;
-	}
-	a:hover{
-		color:red;
-	}
-	#publisher_brief{
-		width:400px;
-		height:150px;
-	}
-	.add-error{
-		background:yellow;
-		color:red;
-		font-weight:bold;
-	}
-</style>
-</head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<body>
-	<h2>publisher-edit</h2>
+
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!-- 调用布局，将内容插入布局的content区域 -->
+<t:layout title="添加图书">
+
 	<fieldset>
 		<legend>添加books</legend>
 		<br><br><br>
@@ -88,5 +54,4 @@
 		</form:form>
 	
 	</fieldset>
-</body>
-</html>
+</t:layout>

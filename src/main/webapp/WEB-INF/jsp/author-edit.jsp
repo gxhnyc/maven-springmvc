@@ -3,15 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
 <c:set var="contextPath" value="${pageContext.request.contextPath }"></c:set>
-<c:set var="title" value="${(author.author_name==null||author.author_name=='')?'添加作者':'修改作者' }"></c:set>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title>${title}</title>
-<link href="${contextPath}/assets/css/add-error.css" rel="stylesheet">
-</head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<body>
+<c:set var="pagetitle" value="${(author.author_name==null||author.author_name=='')?'添加作者':'修改作者' }"></c:set>
+
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<!-- 调用布局，将内容插入布局的content区域 -->
+<t:layout title="${pagetitle }">
 	<h2>${title}</h2>
 	<fieldset>
 		<legend>${title}</legend>
@@ -42,5 +38,9 @@
 		</form:form>
 	
 	</fieldset>
-</body>
-</html>
+
+</t:layout>
+
+
+
+

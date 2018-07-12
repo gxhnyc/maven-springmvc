@@ -62,7 +62,7 @@ public class PublisherController {
 			return "publisher-edit";
 		}
 		publisherService.create(publisher);
-		return "redirect:/publishers/publisher-list";
+		return "redirect:/publishers/";
 		
 	}
 	
@@ -73,7 +73,7 @@ public class PublisherController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET,value="/publishers/publisher-list")
+	@RequestMapping(method=RequestMethod.GET,value="/publishers/")
 	public String listall(Model model) {
 		System.out.println("-----PublisherController.listall()---------");
 		List<Publisher> publishers=publisherService.listAll();
