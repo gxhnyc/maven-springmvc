@@ -11,13 +11,13 @@
   			select count(*) from operators where username=#{username}
   		</select>
   		<select id="findAll" resultType="Operator">
-  			select O_ID id,USERNAME, PASSWORD, role_id, DISABLED from OPERATORS order by id desc
+  			select O_ID id,USERNAME, PASSWORD, role_id, DISABLED ,email from OPERATORS order by id desc
   		</select>
   		<select id="findOne" resultMap="OperatorMap">
-  			<!-- select O_ID id,USERNAME, PASSWORD, role_id, DISABLED from OPERATORS
+  			<!-- select O_ID id,USERNAME, PASSWORD, role_id, DISABLED,email from OPERATORS
   				where O_ID=#{id} -->
   				
-  			select o.o_id,o.username,o.password,o.disabled,
+  		   select o.o_id,o.username,o.password,o.disabled,o.email,
                      r.role_id,r.role_name,r.role_desc,
                      l.limits_id,l.limits_name,l.limits_desc
            from operators o 
@@ -29,7 +29,7 @@
   				
   		</select>
   		<select id="findOneByUsername" resultMap="OperatorMap">
-  			select o.o_id,o.username,o.password,o.disabled,
+  			select o.o_id,o.username,o.password,o.disabled,o.email,
                      r.role_id,r.role_name,r.role_desc,
                      l.limits_id,l.limits_name,l.limits_desc
            from operators o 
@@ -43,6 +43,7 @@
   			<result column="username" property="username"/>
   			<result column="password" property="password"/>
   			<result column="disabled" property="disabled"/>
+  			<result column="email" property="email"/>
   			<association property="role" javaType="Role">
   				<id column="role_id" property="role_id"/>
   				<result column="role_name" property="role_name"/>

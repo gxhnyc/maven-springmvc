@@ -102,7 +102,7 @@ public class OperatorController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET,value="/operators/operator-list")
+	@RequestMapping(method=RequestMethod.GET,value="/operators/")
 	public String list(Model model) {
 		List<Operator> operators=operatorService.findAll();
 		model.addAttribute("operators", operators);		

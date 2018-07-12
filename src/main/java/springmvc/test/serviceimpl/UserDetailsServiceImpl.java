@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		 Operator operator = operatorMapper.findOneByUsername(username);
-	        
+	        System.out.println("userDetailsServiceImpl.loadUserByUserName()："+operator.getEmail());
 	        if (operator == null) { // 按照接口要求，用户名不存在时必须抛异常UsernameNotFoundException
 	            throw new UsernameNotFoundException("用户名不存在: " + username);
 	        } 

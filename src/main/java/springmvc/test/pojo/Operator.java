@@ -8,12 +8,15 @@ import javax.validation.constraints.Size;
 public class Operator {
 	
 	private Integer id;//-id: Integer
+	
 	@Size(min=2,max=32,message="2～32个字符")
 	private String username;// -username: String
+	
 	@Size(min=3,max=16)
 	private String password;//  -password: String
 
 	private Boolean disabled;//  -disabled: Boolean
+	private String email;
 	
 	private Role role=new Role();//  -role: 
 	
@@ -51,7 +54,13 @@ public class Operator {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	 
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+		 
 	/*@Override
 	public String toString() {
 		return "Operator [id=" + id + ", username=" + username + ", password="

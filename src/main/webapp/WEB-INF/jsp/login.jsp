@@ -45,7 +45,9 @@
 	<c:if test="${loginError}">
 		<h2>用户名或密码错误！</h2>
 	</c:if>
-
+	<c:if test="${param.logout!=null }">
+		<h2>用户已退出，请重新登录！</h2>
+	</c:if>
 
 	
 	<fieldset>

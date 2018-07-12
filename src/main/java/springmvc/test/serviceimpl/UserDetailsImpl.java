@@ -20,6 +20,7 @@ public class UserDetailsImpl implements UserDetails{
 	private String password;
 	private List<GrantedAuthority> authorities;//权限
 	private boolean enabled;
+	private Operator operator;
 	
 	
 	
@@ -30,6 +31,7 @@ public class UserDetailsImpl implements UserDetails{
 		this.password = operator.getPassword();
 		this.authorities = buildAuthorities(operator);
 		this.enabled = operator.getDisabled()==null?true:!operator.getDisabled();
+		this.operator=operator;
 	}
 	/**
 	 * 	e.g.
@@ -51,6 +53,10 @@ public class UserDetailsImpl implements UserDetails{
 		}
 		
 		return authorities;
+	}
+	
+	public Operator getOperator() {
+		return operator;
 	}
 	
 	@Override
@@ -104,6 +110,7 @@ public class UserDetailsImpl implements UserDetails{
 		// TODO Auto-generated method stub
 		return this.enabled;
 	}
+	
 
 	
 
