@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.and()
 		.formLogin()//配置表单登录
 		.loginPage("/login")//指定登录页面的路径：显示表单（自己写） GET /login；提交表单（springsecurity自带） POST /login
-		.defaultSuccessUrl("/operators/operator-list");//指定默认登录成功页面（比如直接访问登录页面，而不是其他需要登录的页面触发的）
+		.defaultSuccessUrl("/operators/");//指定默认登录成功页面（比如直接访问登录页面，而不是其他需要登录的页面触发的）
 	}
 	
 	
