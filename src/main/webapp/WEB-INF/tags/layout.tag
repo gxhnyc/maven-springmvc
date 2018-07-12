@@ -20,23 +20,39 @@
 	</head>
 	<body>
 	<div class="header">
-		<ul class="menu">
-			<li><a href="">图书管理</a></li>
-			<li><a href="${contextPath }/books/">图书列表</a></li>
-			<li><a href="${contextPath }/books/book-add">添加图书</a></li>
-		</ul>
 	
+		<sec:authorize access="hasAnyAuthority('Limi_BOOK_RW','Limi_BOOK_RO')">
+		<ul class="menu">
+			<li><a href="">图书管理</a></li>			
+			<li><a href="${contextPath }/books/">图书列表</a></li>			
+			<sec:authorize access="hasAuthority('Limi_BOOK_RW')">
+			<li><a href="${contextPath }/books/book-add">添加图书</a></li>
+			</sec:authorize>
+		</ul>
+		</sec:authorize>
+		
+		<sec:authorize access="hasAnyAuthority('Limi_AUTHOR_RW','Limi_AUTHOR_RO')">
 		<ul class="menu">
 			<li><a href="">作者管理</a></li>
+			<sec:authorize access="hasAnyAuthority('Limi_AUTHOR_RW','Limi_AUTHOR_RO')">
 			<li><a href="${contextPath }/authors/">作者列表</a></li>
+			</sec:authorize>
+			<sec:authorize access="hasAuthority('Limi_AUTHOR_RW')">
 			<li><a href="${contextPath }/authors/author-add">添加作者</a></li>
+			</sec:authorize>
 		</ul>
-	
+		</sec:authorize>
+		
+		<sec:authorize access="hasAnyAuthority('Limi_PUBLISHER_RW','Limi_PUBLISHER_RO')">
 		<ul class="menu">
 			<li><a href="">出版社管理</a></li>
 			<li><a href="${contextPath }/publishers/">出版社列表</a></li>
+			<sec:authorize access="hasAuthority('Limi_PUBLISHER_RW')">
 			<li><a href="${contextPath }/publishers/publisher-add">添加出版社</a></li>
+			</sec:authorize>
 		</ul>
+		</sec:authorize>
+		
 		<ul class="menu">
 		<sec:authentication property="principal.username" var="o_username" scope="session"/>
 		<sec:authentication property="principal.operator.email" var="o_email"/>

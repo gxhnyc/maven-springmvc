@@ -29,9 +29,9 @@ public interface AuthorService {
 	@PreAuthorize("hasAuthoriry('Limi_AUTHOR_RW')")
 	public void add(Author au);
 	
-	@PreAuthorize("hasAuthoriry('Limi_AUTHOR_RW')")
+	@PreAuthorize("hasAuthority('Limi_AUTHOR_RW')")
 	public void delete(Long id);
-	@PreAuthorize("hasAuthoriry('Limi_AUTHOR_RW')")
+	@PreAuthorize("hasAuthority('Limi_AUTHOR_RW')")
 	public void update(Author author);
 	@PreAuthorize("hasAnyAuthority('Limi_AUTHOR_RW','Limi_AUTHOR_RO')")
 	public List<Author> findAllOptions();
