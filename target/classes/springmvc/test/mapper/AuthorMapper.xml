@@ -6,6 +6,11 @@
   
   <!--    namespace对应Mapper接口名                -->
   <mapper namespace="springmvc.test.mapper.AuthorMapper">
+  
+  		<delete id="deleteBA">
+  			delete from bookauthor ba where ba.author_id=#{author_id}
+  		</delete>
+  
   		<!-- findBooksByAuthorName 通过作者姓名查找相关信息 -->
   		<select id="findBooksByAuthorName" resultMap="authorDetail">
   			  select a.author_id,a.author_name,a.author_gender,a.author_brief,

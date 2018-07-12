@@ -49,6 +49,8 @@ public class AuthorServiceImpl implements AuthorService {
 	}
 	@Override
 	public void delete(Long id) {
+		//删除作者前，需要先删除图书作者关联表bookauthor
+		authorMapper.deleteBA(id);
 		authorMapper.delete(id);
 		
 	}

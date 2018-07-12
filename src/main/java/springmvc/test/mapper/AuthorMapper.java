@@ -28,4 +28,9 @@ public interface AuthorMapper {
 	public void update(Author author);
 	public boolean authorNameExist(String authorName);
 	public List<Author> findAllOptions();
+	/**
+	 * 删除bookauthor关联
+	 * @param id
+	 */
+	public void deleteBA(Long id);
 }

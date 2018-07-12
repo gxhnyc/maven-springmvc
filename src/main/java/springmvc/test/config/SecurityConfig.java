@@ -1,12 +1,14 @@
 package springmvc.test.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
 @EnableWebSecurity //开启WebSecurity组件功能，获得了SpringSecurityFilterChain组件
+@EnableGlobalMethodSecurity(prePostEnabled=true)//开启方法级别权限检查支持（@preAuthorize）
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 

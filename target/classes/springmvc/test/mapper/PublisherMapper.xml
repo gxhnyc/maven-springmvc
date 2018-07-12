@@ -13,7 +13,7 @@
 	          from publisher p 
 	             left join books b on p.publisher_id=b.publisher_id
 	             left join bookauthor ba on ba.book_id=b.book_id
-	             left join author a on ba.auther_id=a.author_id
+	             left join author a on ba.author_id=a.author_id
 	          where p.publisher_id=#{publisher_id} 
   		</select>
   		<!-- 查询所有出版社信息  -->
@@ -25,7 +25,7 @@
 	          from publisher p 
 	             left join books b on p.publisher_id=b.publisher_id
 	             left join bookauthor ba on ba.book_id=b.book_id
-	             left join author a on ba.auther_id=a.author_id
+	             left join author a on ba.author_id=a.author_id
 	          
   		</select>
   		<select id="findAllOptions" resultType="Publisher">
